@@ -5,11 +5,9 @@ import plotly.graph_objects as go
 import plotly.io as pio
 pio.renderers.default = "notebook"
 
-# %%
-'''
-## Report on unprofitable categories ##
-### Dec 2019 ###
-'''
+# %% [markdown]
+# ## Report on unprofitable categories ##
+# ### Dec 2019 ###
 
 # %%
 df: pd.DataFrame = pd.read_excel(
