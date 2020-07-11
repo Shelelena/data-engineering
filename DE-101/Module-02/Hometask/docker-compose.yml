@@ -1,0 +1,22 @@
+version: '3.1'
+services :
+  postgres:
+    container_name: postgres
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: dummy
+      POSTGRES_PASSWORD: dummy
+      POSTGRES_DB: dummy
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data/
+
+  adminer:
+    container_name: postgres_adminer
+    image: adminer
+    restart: always
+    depends_on: 
+      - postgres
+    ports:
+      - 8080:8080
