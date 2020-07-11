@@ -15,13 +15,22 @@ DATABASE = 'postgresql://dummy:dummy@localhost:5432/dummy'
 def upload_tables():
     engine = create_engine(DATABASE)
 
-    for name in ('Orders', 'People', 'Returns'):
-        df = pd.read_excel(FILE, name)
-        df.to_sql(
-            name.lower(),
-            engine,
-            if_exists='replace'
+    orders = pd.read_excel(FILE, 'Orders')
+    orders = (
+        orders
+        .rename(
+            columns=lambda x:
+            x.lower()
+            .replace(' ', '_')
+            .replace('-', '_')
         )
+        .set_index('row_id')
+    )
+    orders.to_sql(
+        'orders',
+        engine,
+        if_exists='append',
+    )
 
 
 if __name__ == '__main__':
