@@ -1,22 +1,13 @@
 version: '3.1'
 services :
-  postgres:
-    container_name: postgres
-    image: postgres
+  study_postgres:
+    container_name: study_postgres
+    image: postgres:11
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: dummy
-      POSTGRES_PASSWORD: dummy
-      POSTGRES_DB: dummy
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data/
-
-  adminer:
-    container_name: postgres_adminer
-    image: adminer
-    restart: always
-    depends_on: 
-      - postgres
-    ports:
-      - 8080:8080
+      POSTGRES_USER: shelena
+      POSTGRES_PASSWORD: 36R4r8kUAwpy
+      POSTGRES_DB: study_postgres
+    # volumes:
+    #   - postgres-data:/var/lib/postgresql/data

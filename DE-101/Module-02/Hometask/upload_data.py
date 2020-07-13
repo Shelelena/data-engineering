@@ -3,19 +3,23 @@ from sqlalchemy import create_engine
 from pathlib import Path
 
 
-FILE = (
+DATAFILE = (
     Path(__file__).parent.parent.parent
     / 'Module-01'
     / 'Lab'
     / 'Sample - Superstore.xls'
 )
-DATABASE = 'postgresql://dummy:dummy@localhost:5432/dummy'
+DATABASECONN = (
+    Path(__file__).parent.parent.parent.parent.parent
+    / 'database.txt'
+)
 
 
 def upload_tables():
-    engine = create_engine(DATABASE)
+    with DATABASECONN.open() as database_conn:
+        engine = create_engine(database_conn.read())
 
-    orders = pd.read_excel(FILE, 'Orders')
+    orders = pd.read_excel(DATAFILE, 'Orders')
     orders = (
         orders
         .rename(
@@ -28,7 +32,8 @@ def upload_tables():
     )
     orders.to_sql(
         'orders',
-        engine,
+        con=engine,
+        schema='stg',
         if_exists='append',
     )
 
